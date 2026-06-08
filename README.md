@@ -21,4 +21,16 @@ Implementation notes
 - Recommend using Unicode-normalization (NFC), Python’s regex module for flexible pattern handling, and unit tests for transformation rules.  
 - Provide clear defaults that cover common cases but allow per-project configuration files (TOML/JSON/YAML).
 
+LLM back-fill helper
+- A new script at `python/fill_back_cards.py` can fill empty or too-short `Back` fields in an AlgoApp deck using an LLM.
+- Defaults: input `input/kk2.xml`, output folder `output`, maximum 30 cards.
+- Uses `ANTHROPIC_API_KEY` for Claude/Haiku or `OPENAI_API_KEY` for OpenAI.
+- Output file is written as `output/<input_stem>_YYYYMMDD_HHMM.xml`.
+- The script now treats Back fields with up to 2 words as needing fill by default.
+
+Example:
+
+    python python/fill_back_cards.py --input "input/kk2.xml" --output-dir "output" --max-fill 30 --max-back-words 2 --provider anthropic --model claude-haiku-4.5
+
+
 Karten-Kur focuses on reliability and safety: it favors non-destructive defaults, offers previews and backups, and logs every change so you can trust automated repairs without losing original data.
